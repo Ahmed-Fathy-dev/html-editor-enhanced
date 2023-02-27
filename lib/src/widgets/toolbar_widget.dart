@@ -2063,7 +2063,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                       //     "<img src='data:image/${result!.files.single.extension};base64,$base64Data' data-filename='${result!.files.single.name}'/>");
                                     }
                                     if (widget.status ==
-                                            ResponseStatus.loading &&
+                                            ResponseStatus.loading ||
                                         widget.status ==
                                             ResponseStatus.initial) {
                                       Navigator.of(context).pop();
