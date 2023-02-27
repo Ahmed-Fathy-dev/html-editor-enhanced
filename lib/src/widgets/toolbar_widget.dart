@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,12 +17,15 @@ class ToolbarWidget extends StatefulWidget {
   final HtmlEditorController controller;
   final HtmlToolbarOptions htmlToolbarOptions;
   final Callbacks? callbacks;
-
+  final Future<String> Function(String? path)? getUploadedPath;
+  final ResponseStatus status;
   const ToolbarWidget({
     Key? key,
     required this.controller,
     required this.htmlToolbarOptions,
     required this.callbacks,
+    this.getUploadedPath,
+    this.status = ResponseStatus.initial,
   }) : super(key: key);
 
   @override
@@ -2035,7 +2039,9 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                           'Please input either an image or an image URL, not both!';
                                     });
                                   } else if (filename.text.isNotEmpty &&
-                                      result?.files.single.bytes != null) {
+                                      result?.files.single.path != null) {
+                                    // TODO:if make problem return to origin
+                                    //* FIX:Image Uploading code changing from byte to path and pass path to call back function
                                     var base64Data = base64
                                         .encode(result!.files.single.bytes!);
                                     var proceed = await widget
@@ -2045,16 +2051,31 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                                 InsertFileType.image) ??
                                         true;
                                     if (proceed) {
-                                      widget.controller.insertHtml(
-                                          "<img src='data:image/${result!.files.single.extension};base64,$base64Data' data-filename='${result!.files.single.name}'/>");
+                                      if (widget.getUploadedPath != null) {
+                                        final imgUrl =
+                                            await widget.getUploadedPath!(
+                                          result?.files.single.path,
+                                        );
+                                        widget.controller
+                                            .insertNetworkImage(imgUrl);
+                                      }
+                                      // widget.controller.insertHtml(
+                                      //     "<img src='data:image/${result!.files.single.extension};base64,$base64Data' data-filename='${result!.files.single.name}'/>");
                                     }
-                                    Navigator.of(context).pop();
+                                    if (widget.status ==
+                                            ResponseStatus.loading &&
+                                        widget.status ==
+                                            ResponseStatus.initial) {
+                                      Navigator.of(context).pop();
+                                    }
                                   } else {
                                     var proceed = await widget
                                             .htmlToolbarOptions
                                             .mediaLinkInsertInterceptor
-                                            ?.call(url.text,
-                                                InsertFileType.image) ??
+                                            ?.call(
+                                          url.text,
+                                          InsertFileType.image,
+                                        ) ??
                                         true;
                                     if (proceed) {
                                       widget.controller
@@ -2063,7 +2084,9 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                     Navigator.of(context).pop();
                                   }
                                 },
-                                child: Text('OK'),
+                                child: widget.status == ResponseStatus.loading
+                                    ? CupertinoActivityIndicator()
+                                    : Text('OK'),
                               )
                             ],
                           );
@@ -2983,4 +3006,13 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
     }
     return toolbarChildren;
   }
+}
+
+enum ResponseStatus {
+  initial,
+  loading,
+  error,
+  success,
+  noInternetC,
+  failure,
 }
