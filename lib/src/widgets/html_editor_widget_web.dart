@@ -22,6 +22,8 @@ class HtmlEditorWidget extends StatefulWidget {
     required this.htmlToolbarOptions,
     required this.otherOptions,
     required this.initBC,
+    this.getUploadedPath,
+    this.status = ResponseStatus.initial,
   }) : super(key: key);
 
   final HtmlEditorController controller;
@@ -31,7 +33,8 @@ class HtmlEditorWidget extends StatefulWidget {
   final HtmlToolbarOptions htmlToolbarOptions;
   final OtherOptions otherOptions;
   final BuildContext initBC;
-
+  final Future<String> Function(String? path)? getUploadedPath;
+  final ResponseStatus status;
   @override
   _HtmlEditorWidgetWebState createState() => _HtmlEditorWidgetWebState();
 }
@@ -553,7 +556,10 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                   key: toolbarKey,
                   controller: widget.controller,
                   htmlToolbarOptions: widget.htmlToolbarOptions,
-                  callbacks: widget.callbacks)
+                  callbacks: widget.callbacks,
+                  status: widget.htmlEditorOptions.status,
+                  getUploadedPath: widget.htmlEditorOptions.getUploadedPath,
+                )
               : Container(height: 0, width: 0),
           Expanded(
               child: Directionality(
@@ -578,7 +584,10 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                   key: toolbarKey,
                   controller: widget.controller,
                   htmlToolbarOptions: widget.htmlToolbarOptions,
-                  callbacks: widget.callbacks)
+                  callbacks: widget.callbacks,
+                  status: widget.htmlEditorOptions.status,
+                  getUploadedPath: widget.htmlEditorOptions.getUploadedPath,
+                )
               : Container(height: 0, width: 0),
         ],
       ),

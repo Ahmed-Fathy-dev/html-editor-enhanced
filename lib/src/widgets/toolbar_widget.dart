@@ -24,8 +24,8 @@ class ToolbarWidget extends StatefulWidget {
     required this.controller,
     required this.htmlToolbarOptions,
     required this.callbacks,
-    this.getUploadedPath,
-    this.status = ResponseStatus.initial,
+    required this.getUploadedPath,
+    required this.status,
   }) : super(key: key);
 
   @override
