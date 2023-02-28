@@ -2062,12 +2062,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                       // widget.controller.insertHtml(
                                       //     "<img src='data:image/${result!.files.single.extension};base64,$base64Data' data-filename='${result!.files.single.name}'/>");
                                     }
-                                    if (widget.status !=
-                                            ResponseStatus.loading ||
-                                        widget.status !=
-                                            ResponseStatus.initial) {
-                                      Navigator.of(context).pop();
-                                    }
+                                    Navigator.of(context).pop();
                                   } else {
                                     var proceed = await widget
                                             .htmlToolbarOptions
@@ -2084,9 +2079,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                     Navigator.of(context).pop();
                                   }
                                 },
-                                child: widget.status == ResponseStatus.loading
-                                    ? CupertinoActivityIndicator()
-                                    : Text('OK'),
+                                child: Text('OK'),
                               )
                             ],
                           );
