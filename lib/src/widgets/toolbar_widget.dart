@@ -2062,9 +2062,9 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                       // widget.controller.insertHtml(
                                       //     "<img src='data:image/${result!.files.single.extension};base64,$base64Data' data-filename='${result!.files.single.name}'/>");
                                     }
-                                    if (widget.status ==
+                                    if (widget.status !=
                                             ResponseStatus.loading ||
-                                        widget.status ==
+                                        widget.status !=
                                             ResponseStatus.initial) {
                                       Navigator.of(context).pop();
                                     }
