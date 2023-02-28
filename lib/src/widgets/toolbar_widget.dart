@@ -2052,13 +2052,12 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                                         true;
                                     if (proceed) {
                                       if (widget.getUploadedPath != null) {
-                                        final imgUrl =
-                                            await widget.getUploadedPath!(
+                                        await widget.getUploadedPath!(
                                           result?.files.single.path,
                                         );
-                                        widget.controller
-                                            .insertNetworkImage(imgUrl);
                                       }
+                                      // widget.controller
+                                      //     .insertNetworkImage(imgUrl);
                                       // widget.controller.insertHtml(
                                       //     "<img src='data:image/${result!.files.single.extension};base64,$base64Data' data-filename='${result!.files.single.name}'/>");
                                     }
