@@ -112,6 +112,7 @@ class ExpandIconDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
+        //FIXME:change with from _size to 75
     return Container(
       height: _size,
       width: 75,
