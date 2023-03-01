@@ -64,7 +64,7 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
   List<bool> _textDirectionSelected = List<bool>.filled(2, false);
 
   /// Sets the selected item for the font style dropdown
-  String _fontSelectedItem = 'p';
+  String? _fontSelectedItem;
 
   String _fontNameSelectedItem = 'sans-serif';
 
@@ -517,16 +517,20 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
               style: widget.htmlToolbarOptions.textStyle,
               items: [
                 CustomDropdownMenuItem(
-                    value: 'p',
-                    child: PointerInterceptor(child: Text('Normal'))),
+                  value: 'p',
+                  child: PointerInterceptor(
+                    child: Text('Normal'),
+                  ),
+                ),
                 CustomDropdownMenuItem(
                     value: 'blockquote',
                     child: PointerInterceptor(
                       child: Container(
                           decoration: BoxDecoration(
-                              border: Border(
-                                  left: BorderSide(
-                                      color: Colors.grey, width: 3.0))),
+                            border: Border(
+                              left: BorderSide(color: Colors.grey, width: 3.0),
+                            ),
+                          ),
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text('Quote',
                               style: TextStyle(
