@@ -23,7 +23,6 @@ class HtmlEditorWidget extends StatefulWidget {
     required this.otherOptions,
     required this.initBC,
     this.getUploadedPath,
-    this.status = ResponseStatus.initial,
   }) : super(key: key);
 
   final HtmlEditorController controller;
@@ -34,7 +33,6 @@ class HtmlEditorWidget extends StatefulWidget {
   final OtherOptions otherOptions;
   final BuildContext initBC;
   final Future<String> Function(String? path)? getUploadedPath;
-  final ResponseStatus status;
   @override
   _HtmlEditorWidgetWebState createState() => _HtmlEditorWidgetWebState();
 }
@@ -557,27 +555,31 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                   controller: widget.controller,
                   htmlToolbarOptions: widget.htmlToolbarOptions,
                   callbacks: widget.callbacks,
-                  status: widget.htmlEditorOptions.status,
                   getUploadedPath: widget.htmlEditorOptions.getUploadedPath,
+                  iconBtn:
+                      widget.htmlToolbarOptions.iconBtn ?? SizedBox.shrink(),
                 )
               : Container(height: 0, width: 0),
           Expanded(
-              child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: FutureBuilder<bool>(
-                      future: summernoteInit,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return HtmlElementView(
-                            viewType: createdViewId,
-                          );
-                        } else {
-                          return Container(
-                              height: widget.htmlEditorOptions.autoAdjustHeight
-                                  ? actualHeight
-                                  : widget.otherOptions.height);
-                        }
-                      }))),
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: FutureBuilder<bool>(
+                future: summernoteInit,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return HtmlElementView(
+                      viewType: createdViewId,
+                    );
+                  } else {
+                    return Container(
+                        height: widget.htmlEditorOptions.autoAdjustHeight
+                            ? actualHeight
+                            : widget.otherOptions.height);
+                  }
+                },
+              ),
+            ),
+          ),
           widget.htmlToolbarOptions.toolbarPosition ==
                   ToolbarPosition.belowEditor
               ? ToolbarWidget(
@@ -585,8 +587,9 @@ class _HtmlEditorWidgetWebState extends State<HtmlEditorWidget> {
                   controller: widget.controller,
                   htmlToolbarOptions: widget.htmlToolbarOptions,
                   callbacks: widget.callbacks,
-                  status: widget.htmlEditorOptions.status,
                   getUploadedPath: widget.htmlEditorOptions.getUploadedPath,
+                  iconBtn:
+                      widget.htmlToolbarOptions.iconBtn ?? SizedBox.shrink(),
                 )
               : Container(height: 0, width: 0),
         ],

@@ -127,8 +127,9 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                       controller: widget.controller,
                       htmlToolbarOptions: widget.htmlToolbarOptions,
                       callbacks: widget.callbacks,
-                      status: widget.htmlEditorOptions.status,
                       getUploadedPath: widget.htmlEditorOptions.getUploadedPath,
+                      iconBtn: widget.htmlToolbarOptions.iconBtn ??
+                          SizedBox.shrink(),
                     )
                   : Container(height: 0, width: 0),
               Expanded(
@@ -552,8 +553,9 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                       controller: widget.controller,
                       htmlToolbarOptions: widget.htmlToolbarOptions,
                       callbacks: widget.callbacks,
-                      status: widget.htmlEditorOptions.status,
                       getUploadedPath: widget.htmlEditorOptions.getUploadedPath,
+                      iconBtn: widget.htmlToolbarOptions.iconBtn ??
+                          SizedBox.shrink(),
                     )
                   : Container(height: 0, width: 0),
             ],

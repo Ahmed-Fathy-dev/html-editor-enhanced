@@ -114,7 +114,7 @@ class ExpandIconDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       height: _size,
-      width: _size,
+      width: 75,
       color: Theme.of(context).scaffoldBackgroundColor,
       child: IconButton(
         constraints: BoxConstraints(

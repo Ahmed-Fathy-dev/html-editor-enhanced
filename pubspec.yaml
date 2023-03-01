@@ -44,7 +44,7 @@ dev_dependencies:
 flutter:
 
   assets:
-    - lib/assets/imgs/
+    - packages/html_editor_enhance/assets/imgs/heading.png
     - packages/html_editor_enhance/assets/summernote.html
     - packages/html_editor_enhance/assets/summernote-no-plugins.html
     - packages/html_editor_enhance/assets/summernote-lite.min.css

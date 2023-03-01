@@ -18,14 +18,14 @@ class ToolbarWidget extends StatefulWidget {
   final HtmlToolbarOptions htmlToolbarOptions;
   final Callbacks? callbacks;
   final Future<String> Function(String? path)? getUploadedPath;
-  final ResponseStatus status;
+  final Widget iconBtn;
   const ToolbarWidget({
     Key? key,
     required this.controller,
     required this.htmlToolbarOptions,
     required this.callbacks,
     required this.getUploadedPath,
-    required this.status,
+    required this.iconBtn,
   }) : super(key: key);
 
   @override
@@ -361,18 +361,35 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
               height: widget.htmlToolbarOptions.toolbarItemHeight + 15,
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: CustomScrollView(
-                  scrollDirection: Axis.horizontal,
-                  slivers: [
-                    SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
                         children: _buildChildren(),
                       ),
                     ),
+                    VerticalDivider(),
+                    widget.iconBtn
                   ],
                 ),
+                // child: CustomScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   shrinkWrap: true,
+                //   slivers: [
+                //     SliverFillRemaining(
+                //       hasScrollBody: false,
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //         children: _buildChildren(),
+                //       ),
+                //     ),
+                //     SliverToBoxAdapter(
+                //       child: widget.iconBtn,
+                //     )
+                //   ],
+                // ),
               ),
             ),
           ),
@@ -460,7 +477,14 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                             hasScrollBody: false,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: _buildChildren(),
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    children: _buildChildren(),
+                                  ),
+                                ),
+                                widget.iconBtn
+                              ],
                             ),
                           ),
                         ],
@@ -495,11 +519,15 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
                   ),
           child: CustomDropdownButtonHideUnderline(
             child: CustomDropdownButton<String>(
-              hint: Image.asset(
+              isDense: true,
+              hint: Icon(
+                Icons.h_mobiledata_outlined,
+              ) /* Image.asset(
                 'lib/assets/imgs/heading.png',
                 height: 15,
                 width: 15,
-              ),
+              ) */
+              ,
               elevation: widget.htmlToolbarOptions.dropdownElevation,
               icon: widget.htmlToolbarOptions.dropdownIcon,
               iconEnabledColor: widget.htmlToolbarOptions.dropdownIconColor,
@@ -3009,13 +3037,4 @@ class ToolbarWidgetState extends State<ToolbarWidget> {
     }
     return toolbarChildren;
   }
-}
-
-enum ResponseStatus {
-  initial,
-  loading,
-  error,
-  success,
-  noInternetC,
-  failure,
 }

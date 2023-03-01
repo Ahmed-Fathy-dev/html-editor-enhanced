@@ -26,7 +26,6 @@ class HtmlEditorOptions {
     this.shouldEnsureVisible = false,
     this.spellCheck = false,
     this.getUploadedPath,
-    this.status = ResponseStatus.initial,
   });
 
   /// The editor will automatically adjust its height when the keyboard is active
@@ -128,7 +127,6 @@ class HtmlEditorOptions {
   final bool spellCheck;
 
   final Future<String> Function(String? path)? getUploadedPath;
-  final ResponseStatus status;
 }
 
 /// Options that modify the toolbar and its behavior
@@ -194,7 +192,10 @@ class HtmlToolbarOptions {
     this.toolbarItemHeight = 36,
     this.gridViewHorizontalSpacing = 5,
     this.gridViewVerticalSpacing = 5,
+    this.iconBtn,
   });
+
+  final Widget? iconBtn;
 
   /// Allows you to set the allowed extensions when a user inserts an audio file
   ///
